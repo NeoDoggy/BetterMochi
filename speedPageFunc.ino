@@ -14,10 +14,10 @@ extern int tftBrightness;
 
 //......................................colors
 #define backColor 0x0000 //0x0026
-#define gaugeColor 0x055D
+#define gaugeColor 0x0000 //055D
 #define dataColor 0x0311
-#define purple 0xEA16
-#define needleColor 0xF811
+#define purple 0xF9EB  //EA16
+#define needleColor 0xF9EB //F811
 
 //............................dont edit this
 int cx=120;
@@ -114,17 +114,19 @@ void drawGuage()
   sprite.drawSmoothArc(cx, cy, r-50, r-49, 30, 330, 0xCE59, backColor);
   sprite.drawSmoothArc(cx, cy, r-62, r-61, 30, 330, 0xCE59, backColor);
 
-  sprite.drawRect(110,170,20,14,TFT_RED);
-  sprite.fillRect(113,167,4,3,TFT_RED);
-  sprite.fillRect(124,167,4,3,TFT_RED);
-  sprite.drawLine(114,174,118,174,TFT_RED);
-  sprite.drawLine(122,174,126,174,TFT_RED);
-  sprite.drawLine(124,176,124,172,TFT_RED);
+  // battery icon
+  // sprite.drawRect(110,170,20,14,TFT_RED);
+  // sprite.fillRect(113,167,4,3,TFT_RED);
+  // sprite.fillRect(124,167,4,3,TFT_RED);
+  // sprite.drawLine(114,174,118,174,TFT_RED);
+  // sprite.drawLine(122,174,126,174,TFT_RED);
+  // sprite.drawLine(124,176,124,172,TFT_RED);
 
-   sprite.fillTriangle(90,95,100,86,100,104,dirColor[leftPointer]);   //dirction pointers
-   sprite.fillRect(100,90,10,10,dirColor[leftPointer]);
-   sprite.fillTriangle(140,86,140,104,150,95,dirColor[rightPointer]);
-   sprite.fillRect(130,90,10,10,dirColor[rightPointer]);
+  // dirction pointers
+  // sprite.fillTriangle(90,95,100,86,100,104,dirColor[leftPointer]);   
+  // sprite.fillRect(100,90,10,10,dirColor[leftPointer]);
+  // sprite.fillTriangle(140,86,140,104,150,95,dirColor[rightPointer]);
+  // sprite.fillRect(130,90,10,10,dirColor[rightPointer]);
    
 
   
@@ -163,14 +165,14 @@ void drawGuage()
   sprite.drawString("KM/H",cx,cy+34);
   sprite.unloadFont();
   sprite.loadFont(big);
-  sprite.drawString(String((int)speedAngle),cx,cy+12);
+  sprite.drawString(String((int)speedAngle),cx,cy);  //sprite.drawString(String((int)speedAngle),cx,cy+12);
   sprite.unloadFont();
   sprite.setTextColor(TFT_RED,backColor);
-  sprite.drawString("12."+String(random(10,97)),120,194);
+  sprite.drawString("",120,194);
   sprite.setTextColor(TFT_WHITE,blockColor[3]);
-   sprite.drawString("32452.23",120,212,2);
+   sprite.drawString(""+String(tftBrightness),120,212,2);
   sprite.setTextColor(TFT_ORANGE,backColor);
-   sprite.drawString("BRIGHTNESS:"+String(tftBrightness),120,226);
+   sprite.drawString("",120,226);
    //..............................................push Sprite to screen  
    sprite.pushSprite(0,0);
   
