@@ -164,19 +164,20 @@ void drawClock() {  // 202501081541006 => 15
     sprite.drawString(s, sx, sy - 36);
     sprite.setFreeFont(&DSEG7_Classic_Regular_28);
     sprite.drawString(h + ":" + m, sx, sy + 28);
-    sprite.setTextFont(0);
+    sprite.setTextFont(1);
 
     sprite.fillRect(70, 86, 12, 20, clock_color3);
     sprite.fillRect(84, 86, 12, 20, clock_color3);
     sprite.fillRect(150, 86, 12, 20, clock_color3);
     sprite.fillRect(164, 86, 12, 20, clock_color3);
-
+    
+    // sprite.setFreeFont(&Slackey_Regular_16);
     sprite.setTextColor(0x35D7, TFT_BLACK);
-    sprite.drawString("MONTH", 84, 78);
-    sprite.drawString("DAY", 162, 78);
+    // sprite.drawString("MONTH", 84, 78);
+    // sprite.drawString("DAY", 162, 78);
     sprite.setTextColor(TFT_ORANGE, TFT_BLACK);
     sprite.drawString("UTC+8", 120, 174);
-    sprite.drawString("***", 120, 104);
+    // sprite.drawString("***", 120, 104);
 
     sprite.setTextColor(TFT_WHITE, clock_color3);
     sprite.drawString(m1, 77, 96, 2);

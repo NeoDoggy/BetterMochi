@@ -161,16 +161,18 @@ void drawGuage()
 
 
   //.....................................drawing  TEXT
+  
   sprite.setTextColor(TFT_WHITE,backColor);
   sprite.drawString("KM/H",cx,cy+34);
   sprite.unloadFont();
-  sprite.loadFont(big);
+  // sprite.loadFont(big);
+  sprite.setFreeFont(&DSEG7_Classic_Regular_28);
   sprite.drawString(String((int)speedAngle),cx,cy);  //sprite.drawString(String((int)speedAngle),cx,cy+12);
   sprite.unloadFont();
   sprite.setTextColor(TFT_RED,backColor);
   sprite.drawString("",120,194);
   sprite.setTextColor(TFT_WHITE,blockColor[3]);
-   sprite.drawString(""+String(tftBrightness),120,212,2);
+  sprite.drawString("GPS",120,212,2);
   sprite.setTextColor(TFT_ORANGE,backColor);
    sprite.drawString("",120,226);
    //..............................................push Sprite to screen  
