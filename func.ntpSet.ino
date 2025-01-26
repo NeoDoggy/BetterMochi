@@ -8,7 +8,7 @@ void ntpRtcInit(){
     Serial.println("Failed to obtain time");
     return;
   }
-  rtc.adjust(DateTime(timeinfo.tm_year,
+  rtc.adjust(DateTime(timeinfo.tm_year+1900,
                       timeinfo.tm_mon+1,
                       timeinfo.tm_mday,
                       timeinfo.tm_hour,

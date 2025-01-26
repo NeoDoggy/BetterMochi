@@ -1,2 +1,0 @@
-char ssid[] = "*";
-char pass[] = "*";
