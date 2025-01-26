@@ -16,6 +16,8 @@
 #include "images/face1_lossy200.h"
 #include "images/face2_lossy200.h"
 #include "images/face3_lossy200.h"
+#include <WiFi.h>
+#include "conf.secret.h"
 
 #define TP_IRQ 14
 #define TP_SCL 12
@@ -83,6 +85,9 @@ bool CW=0;
 
 const int TONE_OUTPUT_PIN = 3;
 const int TONE_PWM_CHANNEL = 0;
+const char* ntpServer = "time.google.com";
+const long  gmtOffset_sec = 28800; // UTC+8
+const int   daylightOffset_sec = 0;
 
 unsigned long waitTime;
 unsigned long startGIFTime;
@@ -134,6 +139,9 @@ void setup() {  // Initialize all components
   // Serial
   Serial.begin(115200);
 
+  // BLE
+  
+
   // I2C
   Wire.begin(11, 12); 
   rtc.begin();
@@ -172,7 +180,9 @@ void setup() {  // Initialize all components
                     0);          /* pin task to core 0 */
 
   // esp-now
+  WiFi.useStaticBuffers(true);
   WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
     return;
@@ -242,6 +252,16 @@ void loop0(void * pvParameters ){
       }
       playtone=0;
       settings.putInt("pgcnt", nowPage);
+    }
+    // IPAddress ip = WiFi.localIP();
+    // Serial.print("IP Address: ");
+    // Serial.println(ip);
+    if (WiFi.status() == WL_CONNECTED){ // if wifi connected
+      configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+      if(!timeinit){
+        printLocalTime();
+        ntpRtcInit();
+      }
     }
     delay(1);
   }
