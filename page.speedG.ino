@@ -7,6 +7,7 @@ extern TFT_eSprite sprite;
 extern RTC_PCF8563 rtc;
 extern int speed;
 extern int tftBrightness;
+extern bool hasGPS;
 
 #define small NotoSansBold15
 #define final Final_Frontier_28
@@ -166,12 +167,15 @@ void drawGuage()
   sprite.drawString("KM/H",cx,cy+34);
   sprite.unloadFont();
   // sprite.loadFont(big);
-  sprite.setFreeFont(&DSEG7_Classic_Regular_28);
+  sprite.setFreeFont(&DSEG14_Classic_Regular_28);
   sprite.drawString(String((int)speedAngle),cx,cy);  //sprite.drawString(String((int)speedAngle),cx,cy+12);
   sprite.unloadFont();
   sprite.setTextColor(TFT_RED,backColor);
   sprite.drawString("",120,194);
-  sprite.setTextColor(TFT_WHITE,blockColor[3]);
+  if(hasGPS)
+    sprite.setTextColor(TFT_WHITE,blockColor[3]);
+  else
+    sprite.setTextColor(TFT_WHITE,0xF9EB);
   sprite.drawString("GPS",120,212,2);
   sprite.setTextColor(TFT_ORANGE,backColor);
    sprite.drawString("",120,226);

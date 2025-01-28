@@ -1,5 +1,6 @@
 #include "fonts/clockfont.h"
 
+extern const GFXfont DSEG14_Classic_Regular_28;
 extern TFT_eSPI tft;
 extern TFT_eSprite sprite;
 extern String nowtime;
@@ -162,7 +163,7 @@ void drawClock() {  // 202501081541006 => 15
 
     sprite.setFreeFont(&DSEG7_Modern_Bold_20);
     sprite.drawString(s, sx, sy - 36);
-    sprite.setFreeFont(&DSEG7_Classic_Regular_28);
+    sprite.setFreeFont(&DSEG14_Classic_Regular_28);
     sprite.drawString(h + ":" + m, sx, sy + 28);
     sprite.setTextFont(1);
 

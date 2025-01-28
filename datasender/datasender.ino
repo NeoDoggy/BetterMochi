@@ -18,7 +18,7 @@ int speed;
 esp_now_peer_info_t peerInfo;
 TinyGPSPlus gps;
 
-String nowtime="202501010000003"; // 202501081541006 => 15
+String nowtime="202501010000009"; // 202501081541006 => 15
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   Serial.print("\r\nLast Packet Send Status:\t");
@@ -81,23 +81,39 @@ void loop() {
       Serial.println("Error sending the data");
     }
   }
-  if(gps.time.isUpdated()) {
-    Serial.println("Time has been updated");
-    Serial.print("Satellites: ");
-    Serial.println(gps.satellites.value());
-    Serial.print("Time now [GMT]:  ");
-    Serial.print(gps.time.hour());
-    Serial.print(":");
-    Serial.print(gps.time.minute());
-    Serial.print(":");
-    Serial.println(gps.time.second());
-    Serial.print("timeAGE:");
-    Serial.print(gps.time.age());
-    Serial.print(" /speedAGE:");
-    Serial.print(gps.speed.age());
-    Serial.print(" /dateAGE:");
-    Serial.print(gps.date.age());
-    Serial.print(" /locatAGE:");
-    Serial.println(gps.location.age());
+  else if(gps.time.isUpdated()) {
+    Serial.println("GPS lost");
+    // printTimeUp();
+    enData.speed=0;
+    nowtime="202501010000009";
+    nowtime.toCharArray(enData.nowtime, nowtime.length()+1);
+    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &enData, sizeof(enData));
+    if (result == ESP_OK) {
+      Serial.println("Sent with success");
+    }
+    else {
+      Serial.println("Error sending the data");
+    }
   }
+}
+
+
+void printTimeUp(){
+  Serial.println("Time has been updated");
+  Serial.print("Satellites: ");
+  Serial.println(gps.satellites.value());
+  Serial.print("Time now [GMT]:  ");
+  Serial.print(gps.time.hour());
+  Serial.print(":");
+  Serial.print(gps.time.minute());
+  Serial.print(":");
+  Serial.println(gps.time.second());
+  Serial.print("timeAGE:");
+  Serial.print(gps.time.age());
+  Serial.print(" /speedAGE:");
+  Serial.print(gps.speed.age());
+  Serial.print(" /dateAGE:");
+  Serial.print(gps.date.age());
+  Serial.print(" /locatAGE:");
+  Serial.println(gps.location.age());
 }

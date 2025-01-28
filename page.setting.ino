@@ -7,7 +7,7 @@ unsigned short grays[101] = { 0 };
 
 unsigned short foreground = TFT_WHITE;
 unsigned short background = TFT_BLACK;
-String setOpt[20] = {"Backlight","Rotation","Sound","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","Back"};
+String setOpt[20] = {"Backlight","Rotation","Sound","Set Time","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","Back"};
 int setPageMap[20]   = {0,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
 double set_rad = 0.01745;
@@ -65,6 +65,10 @@ void btpushcheck(){
     else{
       inOP=0;
       opInit=0;
+      if(setPageMap[nowSetPage]==3){
+        WiFi.disconnect();
+        esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
+      }
     }
   }
   Serial.println("nowSetPage:"+String(setPageMap[nowSetPage]));

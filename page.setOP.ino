@@ -13,11 +13,12 @@ extern int nowSetPage;
 extern bool setInit;
 extern bool inSetting;
 extern bool mute;
+extern bool ntpInit;
 
 int xcenter=120;
 int ycenter=120;
 
-String setopshows[20]={"Backlight","Rotation","Mute","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","Back"};
+String setopshows[20]={"Backlight","Rotation","Mute","Set Time","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","Back"};
 int    setopvalue[20]={255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int    maxopvalue[20]={255,7,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -41,6 +42,9 @@ void setOPInit(){
   sprite.setTextColor(TFT_WHITE);
   sprite.setFreeFont(&DSEG14_Classic_Regular_28);
   sprite.drawString(setopshows[setPageMap[nowSetPage]], 120, 120);
+  if(setPageMap[nowSetPage]==3&&!setopvalue[3]){
+    WiFi.begin(ssid, pass);
+  }
   sprite.drawString(String(setopvalue[setPageMap[nowSetPage]]), 120, 160);
   runOP();
   sprite.pushSprite(0, 0);

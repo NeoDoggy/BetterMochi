@@ -1,6 +1,7 @@
 extern DateTime now;
 extern RTC_PCF8563 rtc;
 extern bool timeinit;
+extern int setopvalue[20];
 
 void ntpRtcInit(){
   struct tm timeinfo;
@@ -17,6 +18,10 @@ void ntpRtcInit(){
                       ));
   now=rtc.now();
   timeinit=1;
+  setopvalue[3]=1;
+  setOPInit();
+  WiFi.disconnect();
+  esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
 }
 
 

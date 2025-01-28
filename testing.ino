@@ -12,6 +12,7 @@
 #include "RTClib.h"
 #include <Time.h>
 #include "conf.pitches.h"
+#include <esp_wifi.h>
 
 #include "images/face1_lossy200.h"
 #include "images/face2_lossy200.h"
@@ -77,9 +78,11 @@ bool gifWaitStarted=0;
 bool caseNinit[pages]; //0:gif,1:speed,2:clock
 bool setInit=0;
 bool opInit=0;
+bool ntpInit=0;
 bool timeinit=0;
 bool inSetting=0;
 bool inOP=0;
+bool hasGPS=0;
 bool mute=0;
 bool CW=0;
 
@@ -112,6 +115,11 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&enData, incomingData, sizeof(enData));
   speed=enData.speed;
   nowtime=String(enData.nowtime);
+
+  if(nowtime[14]=='0')
+    hasGPS=1;
+  else if(nowtime[14]=='9')
+    hasGPS=0;
 
   // init RTC
   if(!timeinit)rtcInit();
@@ -182,13 +190,11 @@ void setup() {  // Initialize all components
   // esp-now
   WiFi.useStaticBuffers(true);
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, pass);
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
     return;
   }
   esp_now_register_recv_cb(esp_now_recv_cb_t(OnDataRecv));
-
   // others
 }
 
@@ -253,9 +259,6 @@ void loop0(void * pvParameters ){
       playtone=0;
       settings.putInt("pgcnt", nowPage);
     }
-    // IPAddress ip = WiFi.localIP();
-    // Serial.print("IP Address: ");
-    // Serial.println(ip);
     if (WiFi.status() == WL_CONNECTED){ // if wifi connected
       configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
       if(!timeinit){
