@@ -95,6 +95,7 @@ const int   daylightOffset_sec = 0;
 unsigned long waitTime;
 unsigned long startGIFTime;
 
+
 // nowtime
 String nowtime="202501010000009"; // 202501081541000 => 15  the last digit is for checking status, 0=>OK, 9=>lost GPS
 
@@ -124,10 +125,10 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   // init RTC
   if(!timeinit)rtcInit();
 
-  Serial.print("now speed:");
-  Serial.println(enData.speed);
-  Serial.print("now time:");
-  Serial.println(nowtime);
+  // Serial.print("now speed:");
+  // Serial.println(enData.speed);
+  // Serial.print("now time:");
+  // Serial.println(nowtime);
 }
 
 // rotary encoder callback
@@ -200,6 +201,9 @@ void setup() {  // Initialize all components
 
 // 1KHZ loop: CPU1
 void loop0(void * pvParameters ){
+  int startupTone[]={NOTE_DS5,NOTE_GS5,NOTE_DS6,NOTE_GS5,NOTE_CS6,NOTE_GS5,NOTE_C6,NOTE_GS5};
+  if(!mute)
+    playSong(startupTone,100,8);
   while(1){
     if(btPushed){
       btPushed=0;
@@ -207,11 +211,11 @@ void loop0(void * pvParameters ){
       if(!mute){
         if(inSetting){
           int tmptone[]={NOTE_C6,NOTE_E6,NOTE_G6,NOTE_C7};
-          playSong(tmptone,20);
+          playSong(tmptone,20,4);
         }
         else{
           int tmptone[]={NOTE_C7,NOTE_G6,NOTE_E6,NOTE_C6};
-          playSong(tmptone,20);
+          playSong(tmptone,20,4);
         }
       }
     }
@@ -233,6 +237,9 @@ void loop0(void * pvParameters ){
           ++nowPage%=pages;
         else if(inSetting&&!inOP)
           ++nowSetPage%=settingPages;
+        else if(inSetting&&inOP){
+          setOPCW();
+        }
         if(!mute){
           ledcWriteTone(TONE_PWM_CHANNEL,4000);
           delay(20);
@@ -249,6 +256,9 @@ void loop0(void * pvParameters ){
         else if(inSetting&&!inOP){
           if(nowSetPage-1<0)nowSetPage=settingPages-1;
           else nowSetPage--;
+        }
+        else if(inSetting&&inOP){
+          setOPCCW();
         }
         if(!mute){
           ledcWriteTone(TONE_PWM_CHANNEL,4000);
