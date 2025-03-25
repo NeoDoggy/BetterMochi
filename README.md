@@ -89,8 +89,8 @@ In the set page, you could turn the rotary encoder to navigate to the settings y
 
 To navigate back to the home page, turn to the part that is labeled `Back` and press the button.  
 
-![](https://i.imgur.com/iISpgjl.gif)
 <center>
+<img src="https://i.imgur.com/iISpgjl.gif" alt="Rotaries!!!">
 <b>Rotaries!!!</b>
 </center>
 
