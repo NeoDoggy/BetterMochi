@@ -1,2 +1,2 @@
-char ssid[] = "AA";
-char pass[] = "imdiethankyouforever";
+char ssid[] = "*";
+char pass[] = "*";
