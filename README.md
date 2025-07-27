@@ -117,19 +117,36 @@ Also, the touch screen is for adjusting the brightness of the screen, swipe left
 
 ---
 
-## UPDATE v0.2.0
-###### 25 JAN 20
-Congrats!!! Now the mochi guage has 3 pages, the mochi page; the speed guage page; and the clock page!! No more distractions, mochi could help for telling the time now!!
+## UPDATE v0.3.3
+###### 25 JUN 27
+Fixed gif playing issues when millsec() is below waitTime.  
+The original boolean is  
+```cpp
+if(millis()-waitTime>startGIFTime)
+```
+This would result in a overflow if millsec is below waitTime. Fixed by changing the left and right value.  
+```cpp
+if(millis()>startGIFTime+waitTime)
+```
 
-### Clock Page
-<p align="center">
-<img src="https://i.imgur.com/UqplSaZ.jpeg">
-<b>Speed guage page</b>
-</p>
+## UPDATE v0.3.2
+###### 25 JAN 28
+Smol tweak for the speed guage, the guage now would set its speed to 0 when NAK from the GPS with a timeout of `0` seconds. Also, the `GPS` located at the bottom of the guage would turn into red when NAK and navy when ACKed.  
 
-The time will be automatically set when connected to a resonable GPS signal.  
+## UPDATE v0.3.1
+###### 25 JAN 26
+Now added ntp support for setting the time s.t. when there are no GPS signals, you could still set the internal RTC time.  
 
----
+To set the time using NTP, simple navigate to the settings->Set Time.  
+
+To make sure you could connect to the ntp server, you need to set your AP's SSID and PSW using the provided file `conf.secret.h`.  
+
+In the file, simply place your AP's SSID and PSW into the string, for example:
+```cpp=1
+char ssid[] = "YOUR_SSID";
+char pass[] = "YOUR_PW";
+```
+I would recommend you to set it to your mobile phone's hotspot etc s.t. you could set the time wherever you go.  
 
 ## UPDATE v0.3.0
 ###### 25 JAN 24
@@ -152,33 +169,16 @@ BTW, the settings could also be adjust with the touch screen, left for adding `1
 2. Rotation -> Rotation of the screen (0-7)
 3. Sound -> Whether the beep is muted (True/False)
 
-## UPDATE v0.3.1
-###### 25 JAN 26
-Now added ntp support for setting the time s.t. when there are no GPS signals, you could still set the internal RTC time.  
+---
 
-To set the time using NTP, simple navigate to the settings->Set Time.  
+## UPDATE v0.2.0
+###### 25 JAN 20
+Congrats!!! Now the mochi guage has 3 pages, the mochi page; the speed guage page; and the clock page!! No more distractions, mochi could help for telling the time now!!
 
-To make sure you could connect to the ntp server, you need to set your AP's SSID and PSW using the provided file `conf.secret.h`.  
+### Clock Page
+<p align="center">
+<img src="https://i.imgur.com/UqplSaZ.jpeg">
+<b>Speed guage page</b>
+</p>
 
-In the file, simply place your AP's SSID and PSW into the string, for example:
-```cpp=1
-char ssid[] = "YOUR_SSID";
-char pass[] = "YOUR_PW";
-```
-I would recommend you to set it to your mobile phone's hotspot etc s.t. you could set the time wherever you go.  
-
-## UPDATE v0.3.2
-###### 25 JAN 28
-Smol tweak for the speed guage, the guage now would set its speed to 0 when NAK from the GPS with a timeout of `0` seconds. Also, the `GPS` located at the bottom of the guage would turn into red when NAK and navy when ACKed.  
-
-## UPDATE v0.3.3
-###### 25 JUN 27
-Fixed gif playing issues when millsec() is below waitTime.  
-The original boolean is  
-```cpp
-if(millis()-waitTime>startGIFTime)
-```
-This would result in a overflow if millsec is below waitTime. Fixed by changing the left and right value.  
-```cpp
-if(millis()>startGIFTime+waitTime)
-```
+The time will be automatically set when connected to a resonable GPS signal.  
