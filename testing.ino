@@ -298,7 +298,7 @@ void loop1(){
           startGIFTime=millis();
           waitTime=100*random(100,3000);
         }
-        if(millis()-waitTime>startGIFTime){
+        if(millis()>startGIFTime+waitTime){
           playGIF(random(0,3));
           gifWaitStarted=0;
         }
