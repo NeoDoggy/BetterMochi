@@ -170,3 +170,15 @@ I would recommend you to set it to your mobile phone's hotspot etc s.t. you coul
 ## UPDATE v0.3.2
 ###### 25 JAN 28
 Smol tweak for the speed guage, the guage now would set its speed to 0 when NAK from the GPS with a timeout of `0` seconds. Also, the `GPS` located at the bottom of the guage would turn into red when NAK and navy when ACKed.  
+
+## UPDATE v0.3.3
+###### 25 JUN 27
+Fixed gif playing issues when millsec() is below waitTime.  
+The original boolean is  
+```cpp
+if(millis()-waitTime>startGIFTime)
+```
+This would result in a overflow if millsec is below waitTime. Fixed by changing the left and right value.  
+```cpp
+if(millis()>startGIFTime+waitTime)
+```
